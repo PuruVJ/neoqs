@@ -53,6 +53,7 @@
 	],
 	"devDependencies": {
 		"@swc/core": "^1.7.0",
+		"@vitest/coverage-v8": "^2.0.3",
 		"iconv-lite": "^0.5.2",
 		"terser": "^5.31.3",
 		"tsup": "^8.2.0",
@@ -60,7 +61,8 @@
 		"vitest": "^2.0.3"
 	},
 	"scripts": {
-		"compile": "tsup && cp dist/legacy/legacy.cjs legacy.js"
+		"compile": "tsup && cp dist/legacy/legacy.cjs legacy.js",
+		"test": "vitest run --coverage"
 	},
 	"license": "BSD-3-Clause"
 }

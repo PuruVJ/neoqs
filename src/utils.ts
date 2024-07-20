@@ -1,3 +1,4 @@
+import { RFC1738 } from './formats.ts';
 import type { DefaultEncoder, Format, StringifyBaseOptions } from './types.ts';
 
 const has = Object.prototype.hasOwnProperty;
@@ -173,7 +174,7 @@ export const encode: (
 				(c >= 0x30 && c <= 0x39) || // 0-9
 				(c >= 0x41 && c <= 0x5a) || // a-z
 				(c >= 0x61 && c <= 0x7a) || // A-Z
-				(format === 'RFC1738' && (c === 0x28 || c === 0x29)) // ( )
+				(format === RFC1738 && (c === 0x28 || c === 0x29)) // ( )
 			) {
 				arr[arr.length] = segment.charAt(i);
 				continue;
