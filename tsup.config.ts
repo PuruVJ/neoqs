@@ -22,14 +22,12 @@ export default defineConfig([
 		outDir: 'dist/min',
 	},
 	{
-		entry: ['src/legacy.cts'],
+		entry: ['src/legacy.ts'],
 		format: ['cjs', 'esm'],
 		outExtension(ctx) {
 			return { js: ctx.format === 'cjs' ? '.cjs' : '.mjs' };
 		},
-		dts: {
-			banner: `export { default, type TraverseContext, type TraverseOptions } from '..';`,
-		},
+		dts: true,
 		sourcemap: false,
 		clean: true,
 		platform: 'neutral',

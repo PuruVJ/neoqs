@@ -10,3 +10,11 @@ const formats = {
 export { parse } from './parse';
 export { stringify } from './stringify';
 export { formats };
+
+export type {
+	DefaultDecoder,
+	DefaultEncoder,
+	Format,
+	ParseOptions,
+	StringifyOptions,
+} from './types';

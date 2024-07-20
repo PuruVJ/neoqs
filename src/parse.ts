@@ -46,10 +46,10 @@ function parse_array_value(val: string | string[], options: ParseOptions): strin
 // the form is iso-8859-1, or when the submitted form has an accept-charset
 // attribute of iso-8859-1. Presumably also with other charsets that do not contain
 // the ✓ character, such as us-ascii.
-const isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
+const iso_sentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
 
 // These are the percent-encoded utf-8 octets representing a checkmark, indicating that the request actually is utf-8 encoded.
-const charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
+const charset_sentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
 
 function parse_values(str: string, options: ParseOptions) {
 	const obj = { __proto__: null };
@@ -65,9 +65,9 @@ function parse_values(str: string, options: ParseOptions) {
 	if (options.charsetSentinel) {
 		for (i = 0; i < parts.length; ++i) {
 			if (parts[i].indexOf('utf8=') === 0) {
-				if (parts[i] === charsetSentinel) {
+				if (parts[i] === charset_sentinel) {
 					charset = 'utf-8';
-				} else if (parts[i] === isoSentinel) {
+				} else if (parts[i] === iso_sentinel) {
 					charset = 'iso-8859-1';
 				}
 				skip_index = i;
@@ -82,8 +82,8 @@ function parse_values(str: string, options: ParseOptions) {
 		}
 		const part = parts[i];
 
-		const bracketEqualsPos = part.indexOf(']=');
-		const pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
+		const bracket_equals_pos = part.indexOf(']=');
+		const pos = bracket_equals_pos === -1 ? part.indexOf('=') : bracket_equals_pos + 1;
 
 		let key: string, val: string | string[] | null;
 		if (pos === -1) {
@@ -123,13 +123,13 @@ function parse_values(str: string, options: ParseOptions) {
 	return obj;
 }
 
-function parseObject(
+function parse_object(
 	chain: string[],
 	val: string | string[],
 	options: ParseOptions,
-	valuesParsed: boolean,
+	values_parsed: boolean,
 ) {
-	let leaf = valuesParsed ? val : parse_array_value(val, options);
+	let leaf = values_parsed ? val : parse_array_value(val, options);
 
 	for (let i = chain.length - 1; i >= 0; --i) {
 		let obj;
@@ -142,24 +142,24 @@ function parseObject(
 					: ([] as string[]).concat(leaf);
 		} else {
 			obj = options.plainObjects ? Object.create(null) : {};
-			const cleanRoot =
+			const clean_root =
 				root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
-			const decodedRoot = options.decodeDotInKeys ? cleanRoot.replace(/%2E/g, '.') : cleanRoot;
-			const index = parseInt(decodedRoot, 10);
-			if (!options.parseArrays && decodedRoot === '') {
+			const decoded_root = options.decodeDotInKeys ? clean_root.replace(/%2E/g, '.') : clean_root;
+			const index = parseInt(decoded_root, 10);
+			if (!options.parseArrays && decoded_root === '') {
 				obj = { 0: leaf };
 			} else if (
 				!isNaN(index) &&
-				root !== decodedRoot &&
-				String(index) === decodedRoot &&
+				root !== decoded_root &&
+				String(index) === decoded_root &&
 				index >= 0 &&
 				options.parseArrays &&
 				index <= options.arrayLimit!
 			) {
 				obj = [];
 				obj[index] = leaf;
-			} else if (decodedRoot !== '__proto__') {
-				obj[decodedRoot] = leaf;
+			} else if (decoded_root !== '__proto__') {
+				obj[decoded_root] = leaf;
 			}
 		}
 
@@ -170,17 +170,17 @@ function parseObject(
 }
 
 function parseKeys(
-	givenKey: string,
+	given_key: string,
 	val: string | string[],
 	options: NonNullableProperties<ParseOptions>,
-	valuesParsed: boolean,
+	values_parsed: boolean,
 ) {
-	if (!givenKey) {
+	if (!given_key) {
 		return;
 	}
 
 	// Transform dot notation to bracket notation
-	const key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+	const key = options.allowDots ? given_key.replace(/\.([^.[]+)/g, '[$1]') : given_key;
 
 	// The regex chunks
 
@@ -225,10 +225,10 @@ function parseKeys(
 		keys.push('[' + key.slice(segment.index) + ']');
 	}
 
-	return parseObject(keys, val, options, valuesParsed);
+	return parse_object(keys, val, options, values_parsed);
 }
 
-function normalizeParseOptions(
+function normalize_parse_options(
 	opts: ParseOptions | undefined,
 ): NonNullableProperties<ParseOptions> {
 	if (!opts) {
@@ -266,7 +266,7 @@ function normalizeParseOptions(
 		throw new TypeError('The duplicates option must be either combine, first, or last');
 	}
 
-	const allowDots =
+	const allow_dots =
 		typeof opts.allowDots === 'undefined'
 			? // @ts-expect-error dynamic typing
 			  opts.decodeDotInKeys === true
@@ -275,7 +275,7 @@ function normalizeParseOptions(
 			: !!opts.allowDots;
 
 	return {
-		allowDots: allowDots,
+		allowDots: allow_dots,
 		allowEmptyArrays:
 			typeof opts.allowEmptyArrays === 'boolean'
 				? !!opts.allowEmptyArrays
@@ -316,22 +316,22 @@ function normalizeParseOptions(
 }
 
 export function parse(str: string, opts: ParseOptions = {}) {
-	const options = normalizeParseOptions(opts);
+	const options = normalize_parse_options(opts);
 
 	if (str === '' || str === null || typeof str === 'undefined') {
 		return options.plainObjects ? Object.create(null) : {};
 	}
 
-	const tempObj = typeof str === 'string' ? parse_values(str, options) : str;
+	const temp_obj = typeof str === 'string' ? parse_values(str, options) : str;
 	let obj = options.plainObjects ? Object.create(null) : {};
 
 	// Iterate over the keys and setup the new object
 
-	const keys = Object.keys(tempObj);
+	const keys = Object.keys(temp_obj);
 	for (let i = 0; i < keys.length; ++i) {
 		const key = keys[i];
 		// @ts-expect-error
-		const newObj = parseKeys(key, tempObj[key], options, typeof str === 'string');
+		const newObj = parseKeys(key, temp_obj[key], options, typeof str === 'string');
 		obj = merge(obj, newObj, options);
 	}
 
