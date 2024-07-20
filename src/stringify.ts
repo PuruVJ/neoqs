@@ -118,7 +118,7 @@ function inner_stringify(
 		if (strictNullHandling) {
 			return encoder && !encodeValuesOnly
 				? // @ts-expect-error
-				  encoder(prefix, defaults.encoder, charset, 'key', format)
+					encoder(prefix, defaults.encoder, charset, 'key', format)
 				: prefix;
 		}
 
@@ -130,7 +130,7 @@ function inner_stringify(
 			const key_value = encodeValuesOnly
 				? prefix
 				: // @ts-expect-error
-				  encoder(prefix, defaults.encoder, charset, 'key', format);
+					encoder(prefix, defaults.encoder, charset, 'key', format);
 			return [
 				formatter?.(key_value) +
 					'=' +
