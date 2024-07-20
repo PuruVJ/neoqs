@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ES2020",
+		"moduleResolution": "Bundler",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"strict": true,
+		"noEmit": true
+	},
+	"include": ["."]
+}
