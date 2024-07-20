@@ -10,7 +10,7 @@ The **qs** module was originally created and maintained by [TJ Holowaychuk](http
 
 ---
 
-- 🤌 3.9KB min+brotli
+- 🤌 3.9KB min+brotli (3x smaller than `qs`)
 - 🚥 Zero dependencies
 - 🎹 TypeScript. Throw away the `@types/qs` package
 - ❎ No polyfills

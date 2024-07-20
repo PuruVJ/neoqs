@@ -61,7 +61,7 @@
 		"vitest": "^2.0.3"
 	},
 	"scripts": {
-		"compile": "tsup && cp dist/legacy/legacy.cjs legacy.js",
+		"compile": "tsup && cp dist/legacy/legacy.cjs legacy.js && cp dist/legacy/legacy.d.ts legacy.d.ts",
 		"test": "vitest run --coverage"
 	},
 	"license": "BSD-3-Clause"
