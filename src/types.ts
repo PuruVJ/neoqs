@@ -59,14 +59,11 @@ export type ParseBaseOptions = {
 	interpretNumericEntities?: boolean;
 	allowEmptyArrays?: boolean;
 	duplicates?: 'combine' | 'first' | 'last';
+	allowDots?: boolean;
+	decodeDotInKeys?: boolean;
 };
 
-export type ParseDynamicOptions<AllowDots extends BooleanOptional> = AllowDots extends true
-	? { allowDots?: AllowDots; decodeDotInKeys?: boolean }
-	: { allowDots?: boolean; decodeDotInKeys?: false };
-
-export type ParseOptions<AllowDots extends BooleanOptional = undefined> = ParseBaseOptions &
-	ParseDynamicOptions<AllowDots>;
+export type ParseOptions = ParseBaseOptions;
 
 export type ParsedQs = {
 	[key: string]: undefined | string | string[] | ParsedQs | ParsedQs[];

@@ -268,8 +268,7 @@ function normalize_parse_options(
 
 	const allow_dots =
 		typeof opts.allowDots === 'undefined'
-			? // @ts-expect-error dynamic typing
-			  opts.decodeDotInKeys === true
+			? opts.decodeDotInKeys === true
 				? true
 				: defaults.allowDots
 			: !!opts.allowDots;

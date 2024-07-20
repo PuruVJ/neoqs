@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
 import { assert, describe, expect, test } from 'vitest';
 import { stringify } from '../src';
-import utils, { encode } from '../src/utils';
+import { encode } from '../src/utils';
 import { empty_test_cases } from './empty-keys-cases';
 import { StringifyOptions } from '../src/types';
 
@@ -36,6 +36,7 @@ describe('stringify()', function (t) {
 
 	test('stringifies bigints', function (st) {
 		var three = BigInt(3);
+		// @ts-expect-error
 		var encodeWithN = function (value, defaultEncoder, charset) {
 			var result = defaultEncoder(value, defaultEncoder, charset);
 			return typeof value === 'bigint' ? result + 'n' : result;
@@ -1853,6 +1854,7 @@ describe('stringify()', function (t) {
 			stringify(
 				{ a: [date] },
 				{
+					// @ts-expect-error
 					serializeDate: function (d) {
 						return d.getTime();
 					},
@@ -1864,6 +1866,7 @@ describe('stringify()', function (t) {
 			stringify(
 				{ a: [date] },
 				{
+					// @ts-expect-error
 					serializeDate: function (d) {
 						return d.getTime();
 					},
@@ -1914,6 +1917,7 @@ describe('stringify()', function (t) {
 			// 	stringify({ a: 'b c' }, { format: format });
 			// }, new TypeError('Unknown format option provided.'));
 			expect(() => {
+				// @ts-expect-error
 				stringify({ a: 'b c' }, { format: format });
 			}).toThrowError(TypeError);
 		});
@@ -2004,6 +2008,7 @@ describe('stringify()', function (t) {
 		// 	stringify({ a: 'b' }, { charset: 'foobar' });
 		// }, new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined'));
 		expect(() => {
+			// @ts-expect-error
 			stringify({ a: 'b' }, { charset: 'foobar' });
 		}).toThrowError(TypeError);
 	});
@@ -2051,6 +2056,7 @@ describe('stringify()', function (t) {
 	});
 
 	test('strictNullHandling works with custom filter', function (st) {
+		// @ts-expect-error
 		var filter = function (prefix, value) {
 			return value;
 		};
@@ -2067,10 +2073,12 @@ describe('stringify()', function (t) {
 		var options = { strictNullHandling: true, serializeDate: serializeDate };
 		var date = new Date();
 		// st.equal(stringify({ key: date }, options), 'key');
+		// @ts-expect-error
 		expect(stringify({ key: date }, options)).toBe('key');
 	});
 
 	test('allows for encoding keys and values differently', function (st) {
+		// @ts-expect-error
 		var encoder = function (str, defaultEncoder, charset, type) {
 			if (type === 'key') {
 				return defaultEncoder(str, defaultEncoder, charset, type).toLowerCase();
@@ -2323,6 +2331,7 @@ describe('stringify()', function (t) {
 		// 	stringify(obj, { arrayFormat: 'bracket', charset: 'utf-8' }),
 		// 	'foo=' + expected.join(''),
 		// );
+		// @ts-expect-error
 		expect(stringify(obj, { arrayFormat: 'bracket', charset: 'utf-8' })).toBe(
 			'foo=' + expected.join(''),
 		);

@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
 import { assert, describe, expect, test } from 'vitest';
 import { parse } from '../src';
-import utils, { decode } from '../src/utils';
+import { decode } from '../src/utils';
 import { empty_test_cases } from './empty-keys-cases';
 
 describe('parse()', () => {
@@ -184,18 +184,22 @@ describe('parse()', () => {
 
 	test('should throw when decodeDotInKeys is not of type boolean', function (st) {
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { decodeDotInKeys: 'foobar' });
 		}).toThrowError(TypeError);
 
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { decodeDotInKeys: 0 });
 		}).toThrowError(TypeError);
 
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { decodeDotInKeys: NaN });
 		}).toThrowError(TypeError);
 
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { decodeDotInKeys: null });
 		}).toThrowError(TypeError);
 	});
@@ -225,18 +229,22 @@ describe('parse()', () => {
 		// }, TypeError);
 
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { allowEmptyArrays: 'foobar' });
 		}).toThrowError(TypeError);
 
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { allowEmptyArrays: 0 });
 		}).toThrowError(TypeError);
 
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { allowEmptyArrays: NaN });
 		}).toThrowError(TypeError);
 
 		expect(() => {
+			// @ts-expect-error
 			parse('foo[]&bar=baz', { allowEmptyArrays: null });
 		}).toThrowError(TypeError);
 	});
@@ -354,7 +362,9 @@ describe('parse()', () => {
 
 	test('allows empty values', function (st) {
 		expect(parse('')).toEqual({});
+		// @ts-expect-error
 		expect(parse(null)).toEqual({});
+		// @ts-expect-error
 		expect(parse(undefined)).toEqual({});
 	});
 
@@ -537,13 +547,16 @@ describe('parse()', () => {
 	});
 
 	test('parses semi-parsed strings', function (st) {
+		// @ts-expect-error
 		expect(parse({ 'a[b]': 'c' })).toEqual({ a: { b: 'c' } });
+		// @ts-expect-error
 		expect(parse({ 'a[b]': 'c', 'a[d]': 'e' })).toEqual({ a: { b: 'c', d: 'e' } });
 	});
 
 	test('parses buffers correctly', function (st) {
 		var b = Buffer.from('test');
 
+		// @ts-expect-error
 		expect(parse({ a: b })).toEqual({ a: b });
 	});
 
@@ -602,6 +615,7 @@ describe('parse()', () => {
 	});
 
 	test('does not use non-splittable objects as delimiters', function (st) {
+		// @ts-expect-error
 		expect(parse('a=b&c=d', { delimiter: true })).toEqual({ a: 'b', c: 'd' });
 	});
 
@@ -653,6 +667,7 @@ describe('parse()', () => {
 			},
 		};
 
+		// @ts-expect-error
 		var result = parse(input);
 
 		expect(result).toEqual(expected);
@@ -678,7 +693,9 @@ describe('parse()', () => {
 	});
 
 	test('parses values with comma as array divider', function (st) {
+		// @ts-expect-error
 		expect(parse({ foo: 'bar,tee' }, { comma: false })).toEqual({ foo: 'bar,tee' });
+		// @ts-expect-error
 		expect(parse({ foo: 'bar,tee' }, { comma: true })).toEqual({ foo: ['bar', 'tee'] });
 	});
 
@@ -767,6 +784,7 @@ describe('parse()', () => {
 			},
 		};
 
+		// @ts-expect-error
 		var result = parse(input, { allowDots: true });
 
 		expect(result).toEqual(expected);
@@ -785,6 +803,7 @@ describe('parse()', () => {
 			},
 		};
 
+		// @ts-expect-error
 		var result = parse(input);
 
 		// st.deepEqual(result, expected);
@@ -798,6 +817,7 @@ describe('parse()', () => {
 		var parsed: any;
 
 		expect(() => {
+			// @ts-expect-error
 			parsed = parse({ 'foo[bar]': 'baz', 'foo[baz]': a });
 		}).not.toThrow();
 
@@ -839,6 +859,7 @@ describe('parse()', () => {
 
 		expect(parse(a)).toEqual({ b: 'c' });
 
+		// @ts-expect-error
 		var result = parse({ a: a });
 		expect('a' in result).toBe(true);
 		expect(result.a).toEqual(a);
@@ -847,12 +868,14 @@ describe('parse()', () => {
 	test('parses dates correctly', function (st) {
 		var now = new Date();
 
+		// @ts-expect-error
 		expect(parse({ a: now })).toEqual({ a: now });
 	});
 
 	test('parses regular expressions correctly', function (st) {
 		var re = /^test$/;
 
+		// @ts-expect-error
 		expect(parse({ a: re })).toEqual({ a: re });
 	});
 
@@ -967,6 +990,7 @@ describe('parse()', () => {
 		// st.deepEqual(parse('a[b]=c&a[hasOwnProperty]=d', { plainObjects: true }), expected);
 		// st.deepEqual(parse(null, { plainObjects: true }), Object.create(null));
 		expect(parse('a[b]=c&a[hasOwnProperty]=d', { plainObjects: true })).toEqual(expected);
+		// @ts-expect-error
 		expect(parse(null, { plainObjects: true })).toEqual(Object.create(null));
 		var expectedArray = Object.create(null);
 		expectedArray.a = Object.create(null);
@@ -1003,6 +1027,7 @@ describe('parse()', () => {
 
 	test('throws error with wrong decoder', function (st) {
 		expect(() => {
+			// @ts-expect-error
 			parse({}, { decoder: 'string' });
 		}).toThrow(new TypeError('Decoder has to be a function.'));
 	});
@@ -1016,6 +1041,7 @@ describe('parse()', () => {
 
 	test('throws if an invalid charset is specified', function (st) {
 		expect(() => {
+			// @ts-expect-error
 			parse('a=b', { charset: 'foobar' });
 		}).toThrow(new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined'));
 	});
@@ -1143,6 +1169,7 @@ describe('parse()', () => {
 	});
 
 	test('allows for decoding keys and values differently', function (st) {
+		// @ts-expect-error
 		var decoder = function (str, defaultDecoder, charset, type) {
 			if (type === 'key') {
 				return defaultDecoder(str, defaultDecoder, charset, type).toLowerCase();
