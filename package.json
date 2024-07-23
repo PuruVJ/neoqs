@@ -2,11 +2,11 @@
 	"name": "neoqs",
 	"description": "A querystring parser that supports nesting and arrays, with a depth limit",
 	"homepage": "https://github.com/puruvj/neoqs",
-	"version": "0.0.1",
+	"version": "6.2.12",
 	"type": "module",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/puruvj/neoqs.git"
+		"url": "git+https://github.com/puruvj/neoqs.git"
 	},
 	"main": "./dist/legacy/legacy.cjs",
 	"sideEffects": false,
@@ -62,7 +62,8 @@
 	},
 	"scripts": {
 		"compile": "tsup && cp dist/legacy/legacy.cjs legacy.js && cp dist/legacy/legacy.d.ts legacy.d.ts",
-		"test": "vitest run --coverage"
+		"test": "vitest run --coverage",
+		"pub": "npm run compile && npm publish --no-git-checks --access public"
 	},
 	"license": "BSD-3-Clause"
 }

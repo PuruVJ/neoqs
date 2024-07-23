@@ -1,6 +1,6 @@
 # neoqs
 
-A querystring parsing and stringifying library with some added security.
+A querystring parsing and stringifying library with some added security. It is a fork and TypeScript rewrite of [qs](https://github.com/ljharb/qs) that aims to be modern, lightweight yet fully backwards compatible with `qs`.
 
 Lead Maintainer: [Puru Vijay](https://github.com/puruvj)
 
@@ -26,12 +26,20 @@ Rules this package aims to follow for an indefinite period of time:
 - Always provide a legacy mode
 - Always follow `qs` API. There already are many packages that do this. `neoqs` intends to be a drop-in replacement for `qs` and provide the same API with 0 dependencies and enhanced Developer Experience.
 
+# When to use this package?
+
+This package is intended to be a drop-in replacement for `qs` and provide the same API with 0 dependencies and enhanced Developer Experience. Hence, if you are already using `qs` in your project, you should use this package instead.
+
+## When \*not\* to use this package?
+
+If your use-cases are very simple(`foo=bar&baz=baka`), mostly top-level keys(`foo=bar`), and not supporting really old browsers and Node versions, delete both `qs` and `neoqs` from your project and use [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) instead.
+
 # Which build to use?
 
-`neoqs` provides 3 builds:
+`neoqs` provides 2 builds:
 
 - default: Backwards compatible with `qs` and provides the same API, but ESM only and compiled to ES2022 with Node 18+
-- legacy: Legacy build with ES5 and CJS, compatible with `qs` and provides the same API. _Theoretically_ works as far back as Node 4.0.0, but it's not tested.
+- legacy: Legacy build with ES5 and CommonJS, compatible with `qs` and provides the same API. _Theoretically_ works as far back as Node 4.0.0, but it's not tested.
 
 Here's a matrix of the different builds:
 
@@ -41,6 +49,20 @@ Here's a matrix of the different builds:
 | legacy  | ✅ ES5    | ✅  | ✅      | ✅   | ❌        | 4.2KB min+brotli |
 
 If you:
+
+### are shipping a library with commonJS support:
+
+Use `legacy` build for compatibility with old browsers and Node versions.
+
+```js
+const { parse, stringify } = require('neoqs/legacy');
+```
+
+ESM:
+
+```js
+import { parse, stringify } from 'neoqs/legacy';
+```
 
 ### don't care about old browsers or Node versions:
 

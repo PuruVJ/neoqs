@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      neoqs:
+        specifier: ^0.0.2
+        version: 0.0.2
+
+packages:
+
+  neoqs@0.0.2:
+    resolution: {integrity: sha512-py00fTYedN9YrRnTrXyM7PYZLyzQokzhNmXEaecs7CcZzfaSglo5CdeSlyPqRiOJx5JyafdlIQ2OSAXMF/xtlQ==}
+
+snapshots:
+
+  neoqs@0.0.2: {}
