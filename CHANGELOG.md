@@ -1,4 +1,4 @@
-## 6.12.6
+# Changelog
 
 ## 6.12.7
 
@@ -6,7 +6,7 @@
 
 - 57347ad: fix: CI Build
 
-PINNED: qs@6.12.3
+## 6.12.6
 
 ### Patch Changes
 
@@ -14,11 +14,11 @@ PINNED: qs@6.12.3
 
 ## 6.12.5
 
-PINNED: qs@6.12.3
-
 - fix: Remove `/min` conditional export from package.json
 
 ## 6.12.4
+
+PINNED: qs@6.12.3
 
 - fix: Whitelist `legacy.*` files in `files` section of `package.json`
 
