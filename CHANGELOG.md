@@ -1,5 +1,11 @@
 ## 6.12.5
 
+## 6.12.6
+
+### Patch Changes
+
+- cd99332: feat: Add provenance
+
 PINNED: qs@6.12.3
 
 - fix: Remove `/min` conditional export from package.json
