@@ -1,3 +1,17 @@
+## 6.12.5
+
+PINNED: qs@6.12.3
+
+- fix: Remove `/min` conditional export from package.json
+
+## 6.12.4
+
+- fix: Whitelist `legacy.*` files in `files` section of `package.json`
+
+---
+
+## Under this section, all the releases are from `qs`
+
 ## **6.12.3**
 
 - [Fix] `parse`: properly account for `strictNullHandling` when `allowEmptyArrays`

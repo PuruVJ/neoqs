@@ -2,7 +2,7 @@
 	"name": "neoqs",
 	"description": "A querystring parser that supports nesting and arrays, with a depth limit",
 	"homepage": "https://github.com/puruvj/neoqs",
-	"version": "6.12.4",
+	"version": "6.12.5",
 	"type": "module",
 	"repository": {
 		"type": "git",
@@ -23,12 +23,8 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"import": {
-				"production": "./dist/min/index.js",
-				"development": "./dist/index.js",
-				"default": "./dist/index.js"
-			},
-			"default": "./dist/min/index.js"
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
 		},
 		"./legacy": {
 			"require": {
