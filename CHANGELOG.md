@@ -1,10 +1,12 @@
-## 6.12.5
-
 ## 6.12.6
+
+PINNED: qs@6.12.3
 
 ### Patch Changes
 
 - cd99332: feat: Add provenance
+
+## 6.12.5
 
 PINNED: qs@6.12.3
 
