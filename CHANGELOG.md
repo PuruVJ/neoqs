@@ -10,7 +10,9 @@ PINNED: qs@6.12.3
 
 ---
 
-## Under this section, all the releases are from `qs`
+Under this section, all the releases are from `qs`
+
+---
 
 ## **6.12.3**
 
