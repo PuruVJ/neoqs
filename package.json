@@ -39,6 +39,9 @@
 		},
 		"./package.json": "./package.json"
 	},
+	"publishConfig": {
+		"provenance": true
+	},
 	"keywords": [
 		"querystring",
 		"qs",
@@ -48,6 +51,7 @@
 		"stringify"
 	],
 	"devDependencies": {
+		"@changesets/cli": "^2.27.7",
 		"@swc/core": "^1.7.0",
 		"@vitest/coverage-v8": "^2.0.3",
 		"iconv-lite": "^0.5.2",
@@ -59,7 +63,10 @@
 	"scripts": {
 		"compile": "tsup && cp dist/legacy/legacy.cjs legacy.js && cp dist/legacy/legacy.d.ts legacy.d.ts",
 		"test": "vitest run --coverage",
-		"pub": "npm run compile && npm publish --no-git-checks --access public"
+		"pub": "npm run compile && npm publish --no-git-checks --access public",
+		"changeset": "changeset",
+		"ci:version": "changeset version",
+		"ci:release": "changeset publish"
 	},
 	"license": "BSD-3-Clause"
 }
