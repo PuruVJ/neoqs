@@ -1,5 +1,11 @@
 ## 6.12.6
 
+## 6.12.7
+
+### Patch Changes
+
+- 57347ad: fix: CI Build
+
 PINNED: qs@6.12.3
 
 ### Patch Changes
