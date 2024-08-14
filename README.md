@@ -214,7 +214,18 @@ console.log(deep);
 // }
 ```
 
-The depth limit helps mitigate abuse when **qs** is used to parse user input, and it is recommended to keep it a reasonably small number.
+You can configure **qs** to throw an error when parsing nested input beyond this depth using the `strictDepth` option (defaulted to false):
+
+```js
+try {
+  qs.parse('a[b][c][d][e][f][g][h][i]=j', { depth: 1, strictDepth: true });
+} catch (err) {
+  assert(err instanceof RangeError);
+  assert.strictEqual(err.message, 'Input depth exceeded depth option of 1 and strictDepth is true');
+}
+```
+
+The depth limit helps mitigate abuse when **qs** is used to parse user input, and it is recommended to keep it a reasonably small number. The strictDepth option adds a layer of protection by throwing an error when the limit is exceeded, allowing you to catch and handle such cases.
 
 For similar reasons, by default **qs** will only parse up to 1000 parameters. This can be overridden by passing a `parameterLimit` option:
 

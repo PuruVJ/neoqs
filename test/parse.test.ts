@@ -1267,3 +1267,64 @@ test('`duplicates` option', function (t) {
 	// );
 	expect(parse('foo=bar&foo=baz', { duplicates: 'last' })).toEqual({ foo: 'baz' });
 });
+
+describe('qs strictDepth option - throw cases', function (t) {
+	test('throws an exception when depth exceeds the limit with strictDepth: true', function () {
+		expect(() => {
+			parse('a[b][c][d][e][f][g][h][i]=j', { depth: 1, strictDepth: true });
+		}).toThrowError(RangeError);
+	});
+
+	test('throws an exception for multiple nested arrays with strictDepth: true', function () {
+		expect(() => {
+			parse('a[0][1][2][3][4]=b', { depth: 3, strictDepth: true });
+		}).toThrowError(RangeError);
+	});
+
+	test('throws an exception for nested objects and arrays with strictDepth: true', function (st) {
+		expect(() => {
+			parse('a[b][c][0][d][e]=f', { depth: 3, strictDepth: true });
+		}).toThrowError(RangeError);
+	});
+
+	test('throws an exception for different types of values with strictDepth: true', function (st) {
+		expect(() => {
+			parse('a[b][c][d][e]=true&a[b][c][d][f]=42', { depth: 3, strictDepth: true });
+		}).toThrowError(RangeError);
+	});
+});
+
+describe('qs strictDepth option - non-throw cases', function (t) {
+	test('when depth is 0 and strictDepth true, do not throw', function (st) {
+		expect(() => {
+			parse('a[b][c][d][e]=true&a[b][c][d][f]=42', { depth: 0, strictDepth: true });
+		}).not.toThrow();
+	});
+
+	test('parses successfully when depth is within the limit with strictDepth: true', function (st) {
+		expect(() => {
+			parse('a[b]=c', { depth: 1, strictDepth: true });
+		}).not.toThrow();
+	});
+
+	test('does not throw an exception when depth exceeds the limit with strictDepth: false', function (st) {
+		expect(() => {
+			const result = parse('a[b][c][d][e][f][g][h][i]=j', { depth: 1 });
+			expect(result).toEqual({ a: { b: { '[c][d][e][f][g][h][i]': 'j' } } });
+		}).not.toThrow();
+	});
+
+	test('parses successfully when depth is within the limit with strictDepth: false', function (st) {
+		expect(() => {
+			const result = parse('a[b]=c', { depth: 1 });
+			expect(result).toEqual({ a: { b: 'c' } });
+		}).not.toThrow();
+	});
+
+	test('does not throw when depth is exactly at the limit with strictDepth: true', function (st) {
+		expect(() => {
+			const result = parse('a[b][c]=d', { depth: 2, strictDepth: true });
+			expect(result).toEqual({ a: { b: { c: 'd' } } });
+		}).not.toThrow();
+	});
+});
