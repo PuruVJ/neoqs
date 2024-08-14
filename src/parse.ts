@@ -23,6 +23,7 @@ const defaults = {
 	parameterLimit: 1000,
 	parseArrays: true,
 	plainObjects: false,
+	strictDepth: false,
 	strictNullHandling: false,
 } as NonNullableProperties<ParseOptions>;
 
@@ -219,9 +220,14 @@ function parseKeys(
 		keys.push(segment[1]);
 	}
 
-	// If there's a remainder, just add whatever is left
+	// If there's a remainder, check strictDepth option for throw, else just add whatever is left
 
 	if (segment) {
+		if (options.strictDepth) {
+			throw new RangeError(
+				'Input depth exceeded depth option of ' + options.depth + ' and strictDepth is true',
+			);
+		}
 		keys.push('[' + key.slice(segment.index) + ']');
 	}
 
@@ -307,6 +313,7 @@ function normalize_parse_options(
 		parseArrays: opts.parseArrays !== false,
 		plainObjects:
 			typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+		strictDepth: typeof opts.strictDepth === 'boolean' ? !!opts.strictDepth : defaults.strictDepth,
 		strictNullHandling:
 			typeof opts.strictNullHandling === 'boolean'
 				? opts.strictNullHandling

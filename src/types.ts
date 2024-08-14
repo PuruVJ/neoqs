@@ -52,6 +52,7 @@ export type ParseBaseOptions = {
 	allowPrototypes?: boolean;
 	allowSparse?: boolean;
 	parameterLimit?: number;
+	strictDepth?: boolean;
 	strictNullHandling?: boolean;
 	ignoreQueryPrefix?: boolean;
 	charset?: 'utf-8' | 'iso-8859-1';
