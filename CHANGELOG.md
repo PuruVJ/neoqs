@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.13.0
+
+### Minor Changes
+
+- 1588fcc: `parse`: add `strictDepth` option
+
 ## 6.12.7
 
 ### Patch Changes

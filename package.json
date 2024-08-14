@@ -2,7 +2,7 @@
 	"name": "neoqs",
 	"description": "A querystring parser that supports nesting and arrays, with a depth limit",
 	"homepage": "https://github.com/PuruVJ/neoqs",
-	"version": "6.12.7",
+	"version": "6.13.0",
 	"type": "module",
 	"repository": {
 		"type": "git",
