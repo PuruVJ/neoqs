@@ -17,4 +17,5 @@ export type {
 	Format,
 	ParseOptions,
 	StringifyOptions,
+	ParsedQs
 } from './types';
