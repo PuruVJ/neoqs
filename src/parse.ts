@@ -1,4 +1,4 @@
-import type { NonNullableProperties, ParseOptions } from './types.ts';
+import type { NonNullableProperties, ParseOptions, ParsedQs } from './types.ts';
 import { combine, compact, decode, is_regexp, maybe_map, merge } from './utils.ts';
 
 const has = Object.prototype.hasOwnProperty;
@@ -321,7 +321,7 @@ function normalize_parse_options(
 	};
 }
 
-export function parse(str: string, opts: ParseOptions = {}) {
+export function parse(str: string, opts: ParseOptions = {}): ParsedQs {
 	const options = normalize_parse_options(opts);
 
 	if (str === '' || str === null || typeof str === 'undefined') {

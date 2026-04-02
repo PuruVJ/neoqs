@@ -67,7 +67,7 @@ export type ParseBaseOptions = {
 export type ParseOptions = ParseBaseOptions;
 
 export type ParsedQs = {
-	[key: string]: undefined | string | string[] | ParsedQs | ParsedQs[];
+	[key: string]: undefined | string | ParsedQs | (string | ParsedQs)[];
 };
 
 // Type to remove null or undefined union from each property
